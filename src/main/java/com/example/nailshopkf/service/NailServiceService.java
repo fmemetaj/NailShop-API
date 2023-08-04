@@ -6,7 +6,6 @@ import com.example.nailshopkf.repository.NailServiceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NailServiceService {
