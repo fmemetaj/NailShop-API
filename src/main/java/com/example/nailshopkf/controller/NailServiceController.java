@@ -1,7 +1,6 @@
 package com.example.nailshopkf.controller;
 
 import com.example.nailshopkf.entity.NailService;
-import com.example.nailshopkf.exceptions.NailServiceNotFoundException;
 import com.example.nailshopkf.service.NailServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +44,4 @@ public class NailServiceController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ExceptionHandler(NailServiceNotFoundException.class)
-    public ResponseEntity<String> handleNailServiceNotFoundException(NailServiceNotFoundException exception) {
-        return new ResponseEntity<>("Nail Service not found", HttpStatus.NOT_FOUND);
-    }
 }
