@@ -16,16 +16,16 @@ public class NailServiceService {
         this.nailServiceRepository = nailServiceRepository;
     }
 
-    public NailService createNailService(NailService nailService) {
-        return nailServiceRepository.save(nailService);
-    }
-
     public List<NailService> getAllNailServices() {
         return nailServiceRepository.findAll();
     }
 
     public NailService getNailServiceById(Long id) {
         return nailServiceRepository.findById(id).orElseThrow(NailServiceNotFoundException::new);
+    }
+
+    public NailService createNailService(NailService nailService) {
+        return nailServiceRepository.save(nailService);
     }
 
     public NailService updateNailService(Long id, NailService nailService) {
