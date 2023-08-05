@@ -1,17 +1,11 @@
 package com.example.nailshopkf.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Getter
-@Setter
 @Entity
 public class NailService {
 
@@ -19,6 +13,8 @@ public class NailService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
     private double price;
-
+    @OneToMany(mappedBy = "nailService")
+    private List<Appointment> appointments;
 }
