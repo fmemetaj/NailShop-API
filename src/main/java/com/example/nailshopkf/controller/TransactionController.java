@@ -13,11 +13,9 @@ import java.util.List;
 public class TransactionController {
 
     private TransactionService transactionService;
-    private GeneralInfoApiConnector generalInfoApiConnector;
 
-    public TransactionController(TransactionService transactionService, GeneralInfoApiConnector generalInfoApiConnector) {
+    public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
-        this.generalInfoApiConnector = generalInfoApiConnector;
     }
 
     @GetMapping
@@ -32,6 +30,6 @@ public class TransactionController {
 
     @PostMapping("/checkout")
     public ResponseEntity<Transaction> checkout() {
-        return ResponseEntity.ok(generalInfoApiConnector.checkout());
+        return ResponseEntity.ok(transactionService.checkout());
     }
 }

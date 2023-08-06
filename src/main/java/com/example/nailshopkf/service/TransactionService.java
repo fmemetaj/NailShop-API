@@ -11,23 +11,28 @@ import java.util.List;
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
+    private GeneralInfoApiConnector apiConnector;
+
+    public TransactionService(TransactionRepository transactionRepository, GeneralInfoApiConnector apiConnector) {
+        this.transactionRepository = transactionRepository;
+        this.apiConnector = apiConnector;
+    }
 
     public List<Transaction> getAllTransactions() {
+        this.transactionRepository.saveAll(apiConnector.getTransactions());
         return transactionRepository.findAll();
     }
 
     public Transaction getTransactionById(Long id) {
+        if (!transactionRepository.existsById(id)) {
+            this.transactionRepository.save(apiConnector.getTransaction(id));
+        }
         return transactionRepository.findById(id)
                 .orElseThrow(TransactionNotFoundException::new);
     }
 
-    public Transaction createTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public Transaction checkout() {
+        return apiConnector.checkout();
     }
 
-    public void deleteTransaction(Long id) {
-        transactionRepository.findById(id)
-                .orElseThrow(TransactionNotFoundException::new);
-        transactionRepository.deleteById(id);
-    }
 }

@@ -13,32 +13,49 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final GeneralInfoApiConnector generalInfoApiConnector;
     private final ProductService productService;
 
-    public ProductController(GeneralInfoApiConnector generalInfoApiConnector, ProductService productService) {
-        this.generalInfoApiConnector = generalInfoApiConnector;
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String query) {
-        return new ResponseEntity<>(generalInfoApiConnector.searchProducts(query), HttpStatus.OK);
-    }
-
-    @GetMapping("/search/{id}")
-    public ResponseEntity<Product> getProductDetails(@PathVariable Long id) {
-        return new ResponseEntity<>(generalInfoApiConnector.getProductDetails(id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.searchProducts(query), HttpStatus.OK);
     }
 
     @GetMapping("/favorites")
     public ResponseEntity<List<Product>> getFavorites() {
-        return new ResponseEntity<>(generalInfoApiConnector.getFavorites(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getFavorites(), HttpStatus.OK);
+    }
+
+    @PostMapping("/favorites/{id}")
+    public ResponseEntity<Void> addToFavorites(@PathVariable String id) {
+        productService.addToFavorites(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/favorites/{id}")
+    public ResponseEntity<Void> removeFromFavorites(@PathVariable String id) {
+        productService.removeFromFavorites(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/cart")
     public ResponseEntity<List<Product>> getCartItems() {
-        return new ResponseEntity<>(generalInfoApiConnector.getCartItems(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getCartItems(), HttpStatus.OK);
+    }
+
+    @PostMapping("/cart/{id}")
+    public ResponseEntity<Void> addToCart(@PathVariable String id) {
+        productService.addToCart(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/cart/{id}")
+    public ResponseEntity<Void> removeFromCart(@PathVariable String id) {
+        productService.removeFromCart(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
